@@ -50,6 +50,17 @@ void setupViewport(GLFWwindow* window) {
 }
 
 
+float clamp(float i, int clampUpper) {
+    if(i > clampUpper) {
+        return clampUpper;
+    }
+    else if(i < 0) {
+        return 0;
+    }
+    return i;
+}
+
+
 /*
  * main(argc, argv) - the standard C entry point for the program
  */
@@ -155,6 +166,8 @@ int main(int argc, char *argv[]) {
              glUniform1i ( location_tex , 0);
 		}
 
+
+        float size = IMAGE_SIZE;
 	    // Regenerate all the texture data on the CPU for every frame
 	    for(i=0; i<IMAGE_SIZE; i++)
 		{
@@ -164,9 +177,15 @@ int main(int argc, char *argv[]) {
 				y = (double)j / IMAGE_SIZE;
 
 				// Perlin noise
-				red = 128 + 127*noise3(8.0*x, 8.0*y, 0.5*time);
+				//red = 128 + 127*noise3(8.0*x, 8.0*y, 0.5*time);
 
-				// Cellular (Worley) noise
+                red = 128 + 127*noise3(0.8*x, 8*y, 0.5*time);
+
+                red /= 400*noise3(8*x, 8*y, 0.5*time);
+                red /= 50*noise1(x*y*(0.5*time));
+                //red *= 50*noise1(x*y*(0.1*time));
+
+                // Cellular (Worley) noise
 //				point[0] = 12.0*x;
 //				point[1] = 12.0*y;
 //				point[2] = 0.2*time;
@@ -178,9 +197,9 @@ int main(int argc, char *argv[]) {
 				blu = red;
 
 				k = (i + j*IMAGE_SIZE)*4;
-				pixels[k] = red;
-				pixels[k + 1] = grn;
-				pixels[k + 2] = blu;
+				pixels[k] = clamp(red,255);
+				pixels[k + 1] = clamp(grn,255);
+				pixels[k + 2] = clamp(blu,255);
 				pixels[k + 3] = 255;
 		    }
 	    }
