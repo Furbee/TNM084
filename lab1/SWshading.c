@@ -181,9 +181,9 @@ int main(int argc, char *argv[]) {
 
                 red = 128 + 127*noise3(0.8*x, 8*y, 0.5*time);
 
-                red /= 400*noise3(8*x, 8*y, 0.5*time);
-                red /= 50*noise1(x*y*(0.5*time));
-                //red *= 50*noise1(x*y*(0.1*time));
+                red /= 40*noise3(80*x, 80*y, 0.5*time);
+                red /= 40*noise1(y*(0.1*time));
+                red /= 40*noise1(x*(0.1*time));
 
                 // Cellular (Worley) noise
 //				point[0] = 12.0*x;
@@ -193,6 +193,7 @@ int main(int argc, char *argv[]) {
 //				red = 120*(F[1]-F[0]);
 
 				// Set red=grn=blu for grayscale image
+
 				grn = red;
 				blu = red;
 
