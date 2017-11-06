@@ -145,6 +145,9 @@ int main(int argc, char *argv[]) {
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_REPEAT );
     glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT );
 
+    float smoke; 
+    float fire;
+	
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
@@ -174,33 +177,52 @@ int main(int argc, char *argv[]) {
 			x = (double)i / IMAGE_SIZE;
 		    for(j=0; j<IMAGE_SIZE; j++)
 			{
-				y = (double)j / IMAGE_SIZE;
+			        y = (double)j / IMAGE_SIZE;
 
-				// Perlin noise
-				//red = 128 + 127*noise3(8.0*x, 8.0*y, 0.5*time);
+			    	// Perlin noise
+				fire = 128 + 255*noise3(20*x, 5*y - time, time);
+			        //fire = 128 + 255*noise2(4*x/4*y - time*2, time);
+				
+			    	// check if fire value is below 0
+				if(fire<0) fire = 0;
 
-                red = 128 + 127*noise3(0.8*x, 8*y, 0.5*time);
-
-                red /= 40*noise3(80*x, 80*y, 0.5*time);
-                red /= 40*noise1(y*(0.1*time));
-                red /= 40*noise1(x*(0.1*time));
-
-                // Cellular (Worley) noise
-//				point[0] = 12.0*x;
-//				point[1] = 12.0*y;
-//				point[2] = 0.2*time;
-//				Worley(point, 2, F, delta, ID);
-//				red = 120*(F[1]-F[0]);
-
-				// Set red=grn=blu for grayscale image
-
-				grn = red;
-				blu = red;
-
+				red = 2*fire*(1-sqrt(y));
+				// Add yellow in fire!!1
+				grn = red - 150; 
+				blu = 0;
+				
+				smoke = 64 + 127*noise3(3*x, 3*y - time*0.5, time);
+				
+				//red = clamp(red);
+				//grn = clamp(grn);
+				//blu = clamp(blu);
+				
+				//red = smoke + clamp(red);
+				//grn = smoke + clamp(grn);
+				//blu = smoke + clamp(blu);
+			
+				//Combine fire and smoke noise to output map smoke higher
+				red = smoke*pow(y, 3) + clamp(red);
+				grn = smoke*pow(y, 3) + clamp(grn);
+				blu = smoke*pow(y, 3) + clamp(blu);
+				
+			
+				
+				/*
+				// Cellular (Worley) noise
+				point[0] = 40.0*x;
+				point[1] = 30.0*y;
+				point[2] = 0.2*time;
+				Worley(point, 2, F, delta, ID);
+				red = 120*(F[1]-F[0]);
+				grn = 0;
+				blu = 0;
+				*/
+				
 				k = (i + j*IMAGE_SIZE)*4;
-				pixels[k] = clamp(red,255);
-				pixels[k + 1] = clamp(grn,255);
-				pixels[k + 2] = clamp(blu,255);
+				pixels[k] = clamp(red);
+				pixels[k + 1] = clamp(grn);
+				pixels[k + 2] = clamp(blu);
 				pixels[k + 3] = 255;
 		    }
 	    }
