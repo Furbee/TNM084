@@ -1,5 +1,5 @@
 /*
- * A framework for GLSL programming in TNM084 for MT1 2013.
+ * A framework for GLSL programming in TNM084 for MT4/5 2017.
  *
  * This is based on a framweork designed to be easy to understand
  * for students in a computer graphics course in the first year
@@ -49,17 +49,15 @@ void setupViewport(GLFWwindow* window) {
     glViewport( 0, 0, width, height ); // The entire window
 }
 
-
-float clamp(float i, int clampUpper) {
-    if(i > clampUpper) {
-        return clampUpper;
+float clamp(float i) {
+    if(i > 255) {
+        return 255;
     }
     else if(i < 0) {
         return 0;
     }
     return i;
 }
-
 
 /*
  * main(argc, argv) - the standard C entry point for the program
