@@ -8,8 +8,7 @@ find_package(OpenGL REQUIRED)
 set(GLFW_SOURCE_DIR "GLFW")
 
 include_directories(
-        ${GLFW_SOURCE_DIR}
-        ${OPENGL_INCLUDE_DIRS})
+        ${GLFW_SOURCE_DIR})
 
 set(SOURCE_FILES
         cellular.c
@@ -27,4 +26,4 @@ set(SOURCE_FILES
       )
 
 add_executable(TNM084_lab1_C ${SOURCE_FILES})
-target_link_libraries("TNM084_lab1_C" glfw ${OPENGL_LIBRARIES} ${GLFW_LIBRARIES})
+target_link_libraries("TNM084_lab1_C" glfw ${OPENGL_LIBRARIES})
