@@ -1,0 +1,45 @@
+##RenderMan RIB-Structure 1.0
+version 3.03
+
+FrameBegin 1
+
+Display "voronoi3d.tif" "framebuffer" "rgb"
+Format 400 300 -1
+ShadingRate 1
+Projection "perspective" "fov" [30]
+FrameAspectRatio 1.33
+Identity
+
+# Default distant headlight
+LightSource "distantlight" 1
+
+# rh->lh coordinate system
+Scale -1 1 1
+
+# Camera!
+Translate 0 0 4
+Rotate -15 1 0 0 
+Rotate 135 0 1 0 
+PixelSamples 2 2
+PixelFilter "gaussian" 2 2
+Exposure 1 1
+Quantize "rgba" 255 0 255 0.5
+
+WorldBegin
+
+Identity
+
+AttributeBegin
+
+  Color [1.0 0.5 0.0]
+  Surface "voronoitest"
+  TransformBegin
+    Rotate 90 1 0 0 # Make +z point "up", the camera transform above is a bit weird
+    Sphere 1 -1 1 360
+  TransformEnd
+
+AttributeEnd
+
+WorldEnd
+
+FrameEnd

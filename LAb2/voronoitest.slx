@@ -1,0 +1,219 @@
+surface
+AQSIS_V 2
+
+
+segment Data
+
+USES 393474
+
+varying  point voronoi_f2_3d18::Ptex
+varying  point voronoi_f2_3d18::thiscell
+uniform  float voronoi_f2_3d18::i
+uniform  float voronoi_f2_3d18::j
+uniform  float voronoi_f2_3d18::k
+varying  point voronoi_f2_3d18::b19::b20::b21::testcell
+varying  point voronoi_f2_3d18::b19::b20::b21::testpos
+varying  vector voronoi_f2_3d18::b19::b20::b21::offset
+varying  float voronoi_f2_3d18::b19::b20::b21::dist
+varying  point Ptex
+varying  float freq
+varying  float jitter
+varying  float f1
+varying  float f2
+varying  point pt1
+varying  point pt2
+varying  float f
+
+
+segment Init
+
+
+segment Code
+	pushv P
+	pushis "object"
+	transform
+	pop Ptex
+	pushif 3
+	pop freq
+	pushif 0.699999988
+	pop jitter
+	pushv freq
+	setfp
+	pushv Ptex
+	mulpp
+	pop voronoi_f2_3d18::Ptex
+	pushif 0.5
+	pushv voronoi_f2_3d18::Ptex
+	zcomp
+	floor
+	addff
+	pushif 0.5
+	pushv voronoi_f2_3d18::Ptex
+	ycomp
+	floor
+	addff
+	pushif 0.5
+	pushv voronoi_f2_3d18::Ptex
+	xcomp
+	floor
+	addff
+	settp
+	pop voronoi_f2_3d18::thiscell
+	pushif 1
+	pushv freq
+	addff
+	pop f1
+	pushif 1
+	pushv freq
+	addff
+	pop f2
+	pushif 1
+	negf
+	pop voronoi_f2_3d18::i
+	RS_PUSH
+:0
+	S_CLEAR
+	pushif 1
+	pushv voronoi_f2_3d18::i
+	leff
+	S_GET
+	S_JZ 1
+	RS_GET
+	RS_PUSH
+	pushif 1
+	negf
+	pop voronoi_f2_3d18::j
+	RS_PUSH
+:2
+	S_CLEAR
+	pushif 1
+	pushv voronoi_f2_3d18::j
+	leff
+	S_GET
+	S_JZ 3
+	RS_GET
+	RS_PUSH
+	pushif 1
+	negf
+	pop voronoi_f2_3d18::k
+	RS_PUSH
+:4
+	S_CLEAR
+	pushif 1
+	pushv voronoi_f2_3d18::k
+	leff
+	S_GET
+	S_JZ 5
+	RS_GET
+	RS_PUSH
+	pushv voronoi_f2_3d18::k
+	pushv voronoi_f2_3d18::j
+	pushv voronoi_f2_3d18::i
+	settv
+	pushv voronoi_f2_3d18::thiscell
+	addpp
+	pop voronoi_f2_3d18::b19::b20::b21::testcell
+	pushif 0.5
+	setfp
+	pushv voronoi_f2_3d18::b19::b20::b21::testcell
+	pcellnoise3
+	subpp
+	pushv jitter
+	mulfp
+	pushv voronoi_f2_3d18::b19::b20::b21::testcell
+	addpp
+	pop voronoi_f2_3d18::b19::b20::b21::testpos
+	pushv voronoi_f2_3d18::Ptex
+	pushv voronoi_f2_3d18::b19::b20::b21::testpos
+	subpp
+	pop voronoi_f2_3d18::b19::b20::b21::offset
+	pushv voronoi_f2_3d18::b19::b20::b21::offset
+	pushv voronoi_f2_3d18::b19::b20::b21::offset
+	dotpp
+	pop voronoi_f2_3d18::b19::b20::b21::dist
+	S_CLEAR
+	pushv f1
+	pushv voronoi_f2_3d18::b19::b20::b21::dist
+	lsff
+	S_GET
+	RS_PUSH
+	RS_GET
+	RS_JZ 7
+	pushv f1
+	pop f2
+	pushv voronoi_f2_3d18::b19::b20::b21::dist
+	pop f1
+	pushv pt1
+	pop pt2
+	pushv voronoi_f2_3d18::b19::b20::b21::testpos
+	pop pt1
+:7
+	RS_INVERSE
+	RS_JZ 6
+	S_CLEAR
+	pushv f2
+	pushv voronoi_f2_3d18::b19::b20::b21::dist
+	lsff
+	S_GET
+	RS_PUSH
+	RS_GET
+	RS_JZ 8
+	pushv voronoi_f2_3d18::b19::b20::b21::dist
+	pop f2
+	pushv voronoi_f2_3d18::b19::b20::b21::testpos
+	pop pt2
+:8
+	RS_POP
+:6
+	RS_POP
+	RS_POP
+	pushif 1
+	pushv voronoi_f2_3d18::k
+	addff
+	pop voronoi_f2_3d18::k
+	jmp 4
+:5
+	RS_POP
+	RS_POP
+	pushif 1
+	pushv voronoi_f2_3d18::j
+	addff
+	pop voronoi_f2_3d18::j
+	jmp 2
+:3
+	RS_POP
+	RS_POP
+	pushif 1
+	pushv voronoi_f2_3d18::i
+	addff
+	pop voronoi_f2_3d18::i
+	jmp 0
+:1
+	RS_POP
+	pushv freq
+	setfp
+	pushv pt1
+	divpp
+	pop pt1
+	pushv freq
+	setfp
+	pushv pt2
+	divpp
+	pop pt2
+	pushv f1
+	sqrt
+	pop f1
+	pushv f2
+	sqrt
+	pop f2
+	pushv f1
+	pushv f2
+	subff
+	pop f
+	pushv f
+	pushv f
+	pushv f
+	settc
+	pop Ci
+	pushv Os
+	pop Oi
