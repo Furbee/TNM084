@@ -25,6 +25,8 @@ surface simple_surface()
   float wf1, wf2, wdx1, wdy1, wdx2, wdy2; // Outputs for voronoi function used by the wear on the tiles.
   voronoi_f2_2d(s*25, t*30, 7.5, 4, wf1, wf2, wdx1, wdy1, wdx2, wdy2);
   
+  //0.02 * float cellnoise( dx1*89 ) creates a slight differense in color over every bricks
+  //0.12 * float cellnoise (wdx2*120) creates the look of wear where every brick is unique.
   color tilecolor = color(0.709, 0.702, 0.695) + 0.02 * float cellnoise( dx1*89 ) 
 												+ 0.12 * float cellnoise (wdx2*120);
   
