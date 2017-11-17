@@ -5,6 +5,7 @@ FrameBegin 1
 Display "simple.tif" "file" "rgba"
 Format 640 480 -1
 ShadingRate 1
+PixelSamples 2 2
 Projection "perspective" "fov" [30]
 FrameAspectRatio 1.33
 Identity
@@ -21,18 +22,16 @@ Identity
  
 AttributeBegin
   Opacity 1 1 1 #this will define the value f "Os"
-  #Color [0.357 0.345 0.345] # A nice gray color
   # Displacement bounds, important for correct rendering
   Attribute "displacementbound" "float sphere" [0.1] "coordinatesystem" ["shader"]
-  #Surface  "plastic" "Ka" [1] "Kd" [0.5] "Ks" 1 "roughness" 0.1
   Surface "simple_surface"
   Displacement "simple_displacement"
   TransformBegin
-    Rotate 45 1 1 0
-	Polygon "P" [-1 -1 0
-				 1 -1 0 
-				 1 1 0
-				 -1 1 0] # but this Sphere primitive has its poles on the z axis.
+    #Rotate 45 1 1 0
+	Polygon "P" [-1.5 -1.5 0
+				 1.5 -1.5 0 
+				 1.5 1.5 0
+				 -1.5 1.5 0] 
   TransformEnd
  
 AttributeEnd
